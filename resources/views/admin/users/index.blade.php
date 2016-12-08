@@ -1,4 +1,7 @@
-@foreach($array as $value)
-    <li>{!! $value !!}</li>
+<h1>
+    {{dump($check)}}
+    {{dump($id)}}
+@foreach($user as $users)
+    {!!$users->is_admin!!}
 @endforeach
-{!!var_dump($array)!!}
+</h1>

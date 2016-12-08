@@ -1,7 +1,8 @@
 <?php
 
 namespace App;
-
+//use Illuminate\Support\Facades\Auth;
+//use DB;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
@@ -26,4 +27,12 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+//    public static function isAdmin(){
+//        $user = DB::table('users')
+//            ->where('id', '=', Auth::user()->id)
+//            ->where('is_admin', '=', 1)
+//            ->first();
+//        return $user;
+//    }
 }
