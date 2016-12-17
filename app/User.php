@@ -28,11 +28,16 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
-//    public static function isAdmin(){
-//        $user = DB::table('users')
-//            ->where('id', '=', Auth::user()->id)
-//            ->where('is_admin', '=', 1)
-//            ->first();
-//        return $user;
-//    }
+    public function articles()
+    {
+        return $this->hasMany('App\Article');
+    }
+    public function news()
+    {
+        return $this->hasMany('App\News');
+    }
+    public function comments()
+    {
+        return $this->hasMany('App\Comment');
+    }
 }
