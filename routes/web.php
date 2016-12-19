@@ -11,14 +11,12 @@
 |
 */
 
-Route::get('/', ['as' => 'home' ,function () {
-    return view('welcome');
-}]);
-
-
+Route::get('/', 'WelcomeController@index');
 Auth::routes();
 Route::get('/test', 'UsersController@index');
-Route::get('/home', 'HomeController@index');
+Route::get('/home', 'HomeController@index')->name('account');
+Route::resource('/home/articles', 'ArticleController');
+Route::resource('/home/news', 'NewController');
 Route::get('/admin', 'AdminController@index')->middleware('checkAdmin');
 
 Route::group(['prefix' =>'admin','as' => 'admin::', 'middleware' => ['checkAdmin','auth']], function () {
