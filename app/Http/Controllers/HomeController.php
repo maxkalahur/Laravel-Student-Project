@@ -27,8 +27,7 @@ class HomeController extends Controller
     public function index()
     {
         $articles=User::find(Auth::user()->id)->articles()->orderBy('created_at', 'desc')->get();
-        $news=User::find(Auth::user()->id)->news;
-
+        $news=User::find(Auth::user()->id)->news()->orderBy('created_at', 'desc')->get();
         return view('home', [
             'articles'=>$articles,
             'news'=>$news
