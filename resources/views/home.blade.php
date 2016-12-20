@@ -21,8 +21,8 @@
                 <h2 align="center">Your news</h2>
             </div>
             <table class="table tab-content table-bordered">
-                @if(is_object($news))
-            @foreach($news as $new)
+                  @foreach($data as $new)
+                    @if($new->table_name=='news')
                     <tr><th><p align="center">{{$new->title}}</p></th></tr>
                     <tr><td><p class="lead">{{$new->text}}</p></td></tr>
                     <tr><td>
@@ -34,8 +34,8 @@
                             </form>
                             <a href="{{route('home::news.edit', $new->id)}}" class="btn btn-success">update</a>
                         </td></tr>
+                      @endif
             @endforeach
-                    @endif
             </table>
         </div>
     <div class="col-md-6">
@@ -43,8 +43,9 @@
             <h2 align="center">Your article</h2>
         </div>
         <table class="table tab-content table-bordered">
-            @if (is_object($articles))
-        @foreach($articles as $article)
+
+        @foreach($data as $article)
+                @if ($article->table_name=='articles')
                 <tr><th><p align="center">{{$article->title}}</p></th></tr>
                 <tr><td><p class="lead">{{$article->text}}</p></td></tr>
                 <tr><td>
@@ -56,10 +57,12 @@
                         </form>
                         <a href="{{route('home::articles.edit', $article->id)}}" class="btn btn-success">update</a>
                     </td></tr>
-        @endforeach
                 @endif
+        @endforeach
+
         </table>
     </div>
+        <div class="col-md-5 col-md-offset-5">{{$data->links()}}</div>
 </div>
 </div>
 @endsection

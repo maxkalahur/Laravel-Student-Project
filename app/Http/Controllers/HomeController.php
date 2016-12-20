@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Article;
-use App\User;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Input;
 
 class HomeController extends Controller
 {
@@ -26,11 +26,24 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $articles=User::find(Auth::user()->id)->articles()->orderBy('created_at', 'desc')->get();
-        $news=User::find(Auth::user()->id)->news()->orderBy('created_at', 'desc')->get();
+        $page=Input::get('page', 1);
+        $paginate=3;
+        $members=DB::table('news')
+            ->select(DB::raw('id,title, text, created_at, updated_at, \'news\' as table_name'))
+            ->where('user_id', Auth::user()->id);
+        $data=DB::table('articles')
+            ->select(DB::raw('id,title, text, created_at, updated_at, \'articles\' as table_name'))
+            ->where('user_id', Auth::user()->id)
+            ->unionAll($members)
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        $offset=($page*$paginate)-$paginate;
+        $itemsForCurrentPage = array_slice($data->toArray(), $offset, $paginate, true);
+        $data=new LengthAwarePaginator($itemsForCurrentPage, count($data), $paginate, $page);
+        dump($data);
         return view('home', [
-            'articles'=>$articles,
-            'news'=>$news
+          'data'=>$data
         ]);
     }
 }
