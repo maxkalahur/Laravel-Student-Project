@@ -44,6 +44,27 @@ Route::group(['prefix' =>'admin','as' => 'admin::', 'middleware' => ['checkAdmin
             'destroy' => 'news.destroy',
         ]
     ]);
-
+    Route::resource('user', 'Admin\UserController', [
+        'only' => ['index', 'create', 'store', 'edit', 'update', 'destroy'],
+        'names' => [
+            'index' => 'user.index',
+            'create' => 'user.create',
+            'store' => 'user.store',
+            'edit' => 'user.edit',
+            'update' => 'user.update',
+            'destroy' => 'user.destroy',
+        ]
+    ]);
+    Route::resource('comment', 'Admin\CommentController', [
+        'only' => ['index', 'create', 'store', 'edit', 'update', 'destroy'],
+        'names' => [
+            'index' => 'comment.index',
+            'create' => 'comment.create',
+            'store' => 'comment.store',
+            'edit' => 'comment.edit',
+            'update' => 'comment.update',
+            'destroy' => 'comment.destroy',
+        ]
+    ]);
 
 });

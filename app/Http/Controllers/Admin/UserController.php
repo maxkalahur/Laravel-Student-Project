@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Comment;
+use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-class CommentController extends Controller
+class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,8 +15,8 @@ class CommentController extends Controller
      */
     public function index()
     {
-        $comments = Comment::all();
-        return view('admin.comment.show', compact('comments'));
+        $users = User::all();
+        return view('admin.user.show', compact('users'));
     }
 
     /**
@@ -26,7 +26,7 @@ class CommentController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.user.create');
     }
 
     /**
@@ -37,7 +37,20 @@ class CommentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'name' => 'required',
+            'email' => 'email|unique:users',
+            'password' => 'required|min:6'
+        ]);
+
+        $user = new User();
+        $user->name = $request->get('name');
+        $user->email = $request->get('email');
+        $user->password = $request->get('password');
+        $user->is_admin = $request->get('is_admin');
+        $user->save();
+
+        return redirect()->route('admin::user.index');
     }
 
     /**
@@ -48,7 +61,7 @@ class CommentController extends Controller
      */
     public function show($id)
     {
-        //
+
     }
 
     /**
@@ -59,7 +72,8 @@ class CommentController extends Controller
      */
     public function edit($id)
     {
-        //
+        $user = User::findOrFail($id);
+        return view('admin.user.update', compact('user'));
     }
 
     /**
@@ -71,7 +85,20 @@ class CommentController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, [
+            'name' => 'required',
+            'email' => 'required',
+            'password' => 'required|min:6'
+        ]);
+
+        $user = User::findOrFail($id);
+        $user->name = $request->get('name');
+        $user->email = $request->get('email');
+        $user->password = $request->get('password');
+        $user->is_admin = $request->get('is_admin');
+        $user->save();
+
+        return redirect()->route('admin::user.index');
     }
 
     /**
@@ -82,6 +109,9 @@ class CommentController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $deleteModel = User::findOrFail($id);
+        $deleteModel->delete();
+
+        return redirect()->back();
     }
 }

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\User;
+use App\News;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -14,7 +16,8 @@ class NewsController extends Controller
      */
     public function index()
     {
-        //
+        $news = News::all();
+        return view('admin.news.show', compact('news'));
     }
 
     /**
@@ -24,7 +27,8 @@ class NewsController extends Controller
      */
     public function create()
     {
-        //
+        $users = User::all();
+        return view('admin.news.create', compact('users'));
     }
 
     /**
@@ -35,7 +39,18 @@ class NewsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'title' => 'required|min:1',
+            'text' => 'required|min:5'
+        ]);
+
+        $news = new News();
+        $news->title = $request->get('title');
+        $news->text = $request->get('text');
+        $news->user_id = $request->get('user_id');
+        $news->save();
+
+        return redirect()->route('admin::news.index');
     }
 
     /**
@@ -46,7 +61,8 @@ class NewsController extends Controller
      */
     public function show($id)
     {
-        //
+        $news = News::all();
+        view('admin.news.show', compact('news'));
     }
 
     /**
@@ -57,7 +73,9 @@ class NewsController extends Controller
      */
     public function edit($id)
     {
-        //
+        $users = User::all();
+        $news = News::findOrFail($id);
+        return view('admin.news.update', compact('news','users'));
     }
 
     /**
@@ -69,7 +87,18 @@ class NewsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, [
+            'title' => 'required|min:1',
+            'text' => 'required|min:3'
+        ]);
+
+        $news = News::findOrFail($id);
+        $news->title = $request->get('title');
+        $news->text = $request->get('text');
+        $news->user_id  = $request->get('user_id');
+        $news->save();
+
+        return redirect()->route('admin::news.index');
     }
 
     /**
@@ -80,6 +109,9 @@ class NewsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $deleteModel = News::findOrFail($id);
+        $deleteModel->delete();
+
+        return redirect()->back();
     }
 }
