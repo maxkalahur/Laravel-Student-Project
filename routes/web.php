@@ -13,10 +13,15 @@
 
 Route::get('/', 'WelcomeController@index');
 Auth::routes();
-Route::get('/test', 'UsersController@index');
-Route::get('/home', 'HomeController@index')->name('account');
-Route::resource('/home/articles', 'ArticleController');
-Route::resource('/home/news', 'NewController');
+
+//Route::get('/home', 'HomeController@index')->name('account');
+Route::group(['prefix'=>'home', 'as'=>'home::'], function () {
+    Route::get('/', 'HomeController@index');
+   Route::resource('articles', 'ArticleController');
+   Route::resource('news', 'NewController');
+});
+
+
 Route::get('/admin', 'AdminController@index')->middleware('checkAdmin');
 
 Route::group(['prefix' =>'admin','as' => 'admin::', 'middleware' => ['checkAdmin','auth']], function () {

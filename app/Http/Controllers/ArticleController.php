@@ -47,7 +47,7 @@ class ArticleController extends Controller
         $article->text = $request->get('text');
         $article->user()->associate(Auth::user());
         $article->save();
-        return redirect()->route('account');
+        return redirect()->route('home::');
     }
 
     /**
@@ -97,7 +97,7 @@ class ArticleController extends Controller
         $article->title=$request->get('title');
         $article->text=$request->get('text');
         $article->save();
-        return redirect()->route('account');
+        return redirect()->route('home::');
     }
 
     /**
@@ -110,6 +110,6 @@ class ArticleController extends Controller
     {
         $article=Article::findOrFail($id);
         $article->delete();
-        return redirect()->route('account');
+        return redirect()->back();
     }
 }
