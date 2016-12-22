@@ -11,16 +11,18 @@
 |
 */
 
-Route::get('/', 'WelcomeController@index');
+Route::get('/', 'HomeController@index');
 Auth::routes();
 
-//Route::get('/home', 'HomeController@index')->name('account');
 Route::group(['prefix'=>'home', 'as'=>'home::'], function () {
-    Route::get('/', 'HomeController@index');
+    Route::get('/', 'AccountController@index');
    Route::resource('articles', 'ArticleController');
    Route::resource('news', 'NewController');
 });
-
+Route::get('/article/{id}', 'ShowRecordsController@showArticle');
+Route::get('/new/{id}', 'ShowRecordsController@showNew');
+Route::get('/new', 'CommentController@newComment');
+Route::get('/article', 'CommentController@articleComment');
 
 Route::get('/admin', 'AdminController@index')->middleware('checkAdmin');
 
