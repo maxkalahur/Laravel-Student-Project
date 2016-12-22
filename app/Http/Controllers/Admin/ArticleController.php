@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Article;
+use App\News;
 use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -16,8 +17,10 @@ class ArticleController extends Controller
      */
     public function index()
     {
-        $articles = Article::all();
-        return view('admin.article.show',compact('articles'));
+//        $articles = Article::all();
+//        dd($articles);
+        $articles = Article::orderBy('id','desc')->paginate(5);
+        return view('admin.article.show',compact('articles','pag'));
     }
 
     /**

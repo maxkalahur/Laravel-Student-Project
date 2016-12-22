@@ -15,8 +15,8 @@ class CommentController extends Controller
      */
     public function index()
     {
-        $comments = Comment::all();
-        return view('admin.comment.show', compact('comments'));
+        $comment = Comment::all();
+        return view('admin.comment.show', compact('comment'));
     }
 
     /**

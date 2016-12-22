@@ -1,6 +1,7 @@
 @extends('admin.dashboard')
 @section('main-content')
     <h1 class="text-center text-info">Articles</h1>
+    {{ $articles->links() }}
 <div class="row">
     <div class="container-fluid">
             <table class="table table-bordered table-striped table-hover table-condensed">
@@ -20,7 +21,7 @@
                 <td>{{ $value->id }}</td>
                 <td>{{ $value->title }}</td>
                 <td>{{ $value->text }}</td>
-                <td>{{ $value->user->name ? $value->user->name : "no info" }}</td>
+                <td>{{ isset($value->user) ? $value->user->name : 'no user' }}</td>
                 <td></td>
                 <td>{{ $value->created_at }}</td>
                 <td>{{ $value->updated_at }}</td>
@@ -48,5 +49,5 @@
             </a>
         </div>
         </div>
-
+    {{ $articles->links() }}
 @endsection

@@ -6,10 +6,10 @@
             <div class="col-md-8 col-md-offset-2">
                 <h1>{{$header}}</h1>
                 @if(isset($new))
-                    <form action="{{route('home::news.update', $new->id)}}" method="post">
+                    <form action="{{route('news.update', $new->id)}}" method="post">
                         <input type="hidden" name="_method" value="put">
                         @else
-                            <form action="{{route('home::news.store')}}" method="post">
+                            <form action="{{route('news.store')}}" method="post">
                                 @endif
                                 <input type="hidden" name="_token" value="{{csrf_token()}}">
                                 <label>Title:</label>
