@@ -6,7 +6,7 @@ use App\Articles;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class AccountController extends Controller
+class ArticleController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -46,7 +46,7 @@ class AccountController extends Controller
         $article->text = $request->get('text');
         $article->user()->associate(Auth::user());
         $article->save();
-        return redirect()->route('account');
+        return redirect()->route('home::');
     }
 
     /**
@@ -90,7 +90,7 @@ class AccountController extends Controller
         $article->title=$request->get('title');
         $article->text=$request->get('text');
         $article->save();
-        return redirect()->route('account');
+        return redirect()->route('home::');
     }
 
     /**
@@ -103,6 +103,6 @@ class AccountController extends Controller
     {
         $article=Articles::findOrFail($id);
         $article->delete();
-        return redirect()->route('account');
+        return redirect()->back();
     }
 }

@@ -47,7 +47,7 @@ class NewController extends Controller
         $new->text=$request->get('text');
         $new->user()->associate(Auth::user());
         $new->save();
-        return redirect()->route('account');
+        return redirect()->route('home::');
     }
 
     /**
@@ -93,7 +93,7 @@ class NewController extends Controller
         $new->title=$request->get('title');
         $new->text=$request->get('text');
         $new->save();
-        return redirect()->route('account');
+        return redirect()->route('home::');
     }
 
     /**
@@ -106,6 +106,6 @@ class NewController extends Controller
     {
         $new=News::find($id);
         $new->delete();
-        return redirect()->route('account');
+        return redirect()->back();
     }
 }
