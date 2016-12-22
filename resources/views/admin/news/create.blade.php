@@ -1,8 +1,8 @@
 @extends('admin.dashboard')
 @section('main-content')
-    <h1 class="text-center text-info">New Article</h1>
+    <h1 class="text-center text-info">New News</h1>
     <div class="container-fluid table-responsive">
-        <form role="form" action="{{ route('admin::article.store') }}" method="post">
+        <form role="form" action="{{ route('admin::news.store') }}" method="post">
             {!! csrf_field() !!}
 
             <div class="box-body">

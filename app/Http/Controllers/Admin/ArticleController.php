@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Article;
+use App\News;
 use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -16,8 +17,10 @@ class ArticleController extends Controller
      */
     public function index()
     {
-        $articles = Article::all();
-        return view('admin.article.show',['articles' => $articles]);
+//        $articles = Article::all();
+//        dd($articles);
+        $articles = Article::orderBy('id','desc')->paginate(5);
+        return view('admin.article.show',compact('articles','pag'));
     }
 
     /**
@@ -50,7 +53,6 @@ class ArticleController extends Controller
         $article->user_id = $request->get('user_id');
         $article->save();
 
-//        return redirect()->to('Admin\ArticleController@index');
         return redirect()->route('admin::article.index');
     }
 
@@ -74,7 +76,9 @@ class ArticleController extends Controller
      */
     public function edit($id)
     {
-        //
+        $users = User::all();
+        $article = Article::findOrFail($id);
+        return view('admin.article.update', compact('article','users'));
     }
 
     /**
@@ -86,7 +90,18 @@ class ArticleController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, [
+            'title' => 'required|min:1',
+            'text' => 'required|min:3'
+        ]);
+
+        $article = Article::findOrFail($id);
+        $article->title = $request->get('title');
+        $article->text = $request->get('text');
+        $article->user_id  = $request->get('user_id');
+        $article->save();
+
+        return redirect()->route('admin::article.index');
     }
 
     /**
@@ -99,7 +114,7 @@ class ArticleController extends Controller
     {
         $deleteModel = Article::findOrFail($id);
         $deleteModel->delete();
-//        dd($deleteModel);
+
         return redirect()->back();
     }
 }
