@@ -4,22 +4,26 @@
       <div class="container">
           <div class="row">
           <div class="col-md-2">
-              @foreach($news as $new)
+              @foreach($data as $obj)
+                  @if($obj->table_name=="news")
                   <div class="row">
-                      <h2>{{$new->title}}</h2>
-                      <p>{{$new->text}}</p>
+                      <h2><a href="new/{{$obj->id}}">{{$obj->title}}</a></h2>
+                      <p>{{$obj->text}}</p>
                   </div>
+                  @endif
               @endforeach
           </div>
           <div class="col-md-10">
-          @foreach($articles as $article)
+          @foreach($data as $obj)
+              @if($obj->table_name=="articles")
               <div class="row">
-            <h2>{{$article->title}}</h2>
-              <p>{{$article->text}}</p>
+                 <h2><a href="article/{{$obj->id}}">{{$obj->title}}</a></h2>
+                 <p>{{$obj->text}}</p>
               </div>
+                  @endif
           @endforeach
-              <div class="col-md-5 col-md-offset-5">{{$articles->links()}}</div>
           </div>
+              <div class="col-md-7 col-md-offset-5">{{$data->links()}}</div>
       </div>
       </div>
 @endsection

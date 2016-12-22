@@ -4,46 +4,26 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Pagination\LengthAwarePaginator;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
 
 class HomeController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         $page=Input::get('page', 1);
-        $paginate=3;
-        $members=DB::table('news')
-            ->select(DB::raw('id,title, text, created_at, updated_at, \'news\' as table_name'))
-            ->where('user_id', Auth::user()->id);
+        $paginate=4;
+         $members=DB::table('news')
+             ->select(DB::raw('id,title, text, created_at, updated_at, \'news\' as table_name'));
         $data=DB::table('articles')
-            ->select(DB::raw('id,title, text, created_at, updated_at, \'articles\' as table_name'))
-            ->where('user_id', Auth::user()->id)
+            ->select(DB::raw('id,title, text, created_at, updated_at,\'articles\' as table_name'))
             ->unionAll($members)
-            ->orderBy('created_at', 'desc')
             ->get();
-
+        dump($data);
         $offset=($page*$paginate)-$paginate;
         $itemsForCurrentPage = array_slice($data->toArray(), $offset, $paginate, true);
-        $data=new LengthAwarePaginator($itemsForCurrentPage, count($data), $paginate, $page);
-        dump($data);
-        return view('home', [
-          'data'=>$data
+        $data=new LengthAwarePaginator($itemsForCurrentPage, count($data), $paginate, $page, ['path'=>'/']);
+        return view('welcome', [
+            'data'=>$data
         ]);
     }
 }

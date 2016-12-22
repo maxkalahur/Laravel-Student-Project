@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Article;
 use App\News;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;

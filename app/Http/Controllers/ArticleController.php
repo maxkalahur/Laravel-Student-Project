@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Article;
-use App\Comment;
+use App\Articles;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class ArticleController extends Controller
+class AccountController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -42,7 +41,7 @@ class ArticleController extends Controller
             'title' => 'required|max:255',
             'text'=>'required'
         ));
-        $article = new Article;
+        $article = new Articles;
         $article->title=$request->get('title');
         $article->text = $request->get('text');
         $article->user()->associate(Auth::user());
@@ -58,12 +57,6 @@ class ArticleController extends Controller
      */
     public function show($id)
     {
-        $article=Article::findOrFail($id);
-        $comment=Comment::findOrFail($id);
-        return view('showArticle',[
-            'article'=>$article,
-            'comment'=>$comment
-            ]);
     }
     /**
      * Show the form for editing the specified resource.
@@ -73,7 +66,7 @@ class ArticleController extends Controller
      */
     public function edit($id)
     {
-        $article=Article::findOrFail($id);
+        $article=Articles::findOrFail($id);
         return view('crudArticle', [
             'header'=>'Update article',
             'article'=>$article
@@ -89,7 +82,7 @@ class ArticleController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $article=Article::findOrFail($id);
+        $article=Articles::findOrFail($id);
         $this->validate($request, array(
             'title' => 'required|max:255',
             'text'=>'required'
@@ -108,7 +101,7 @@ class ArticleController extends Controller
      */
     public function destroy($id)
     {
-        $article=Article::findOrFail($id);
+        $article=Articles::findOrFail($id);
         $article->delete();
         return redirect()->back();
     }
