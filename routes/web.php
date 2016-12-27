@@ -14,15 +14,22 @@
 Route::get('/', 'HomeController@index');
 Auth::routes();
 
-Route::group(['prefix'=>'home', 'as'=>'home::'], function () {
-    Route::get('/', 'AccountController@index');
+Route::group(['prefix'=>'account', 'as'=>'account::'], function () {
+   Route::get('/', 'AccountController@index');
    Route::resource('articles', 'ArticleController');
-   Route::resource('news', 'NewController');
+   Route::resource('news', 'NewsController');
 });
-Route::get('/article/{id}', 'ShowRecordsController@showArticle');
-Route::get('/new/{id}', 'ShowRecordsController@showNew');
-Route::get('/new', 'CommentController@newComment');
-Route::get('/article', 'CommentController@articleComment');
+Route::group(['prefix'=>'article', 'as'=>'article::'], function () {
+    Route::get('/{slug}', 'ShowRecordsController@showArticle')->name('view');
+    Route::post('/{id}', 'CommentController@articleComment')->name('Comment');
+
+});
+Route::group(['prefix'=>'news', 'as'=>'news::'], function () {
+    Route::get('/{slug}', 'ShowRecordsController@showNews')->name('view');
+    Route::post('/{id}', 'CommentController@newsComment')->name('Comment');
+});
+
+
 
 Route::get('/admin', 'AdminController@index')->middleware('checkAdmin');
 

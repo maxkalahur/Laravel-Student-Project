@@ -6,7 +6,7 @@ use App\News;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class NewController extends Controller
+class NewsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -47,7 +47,7 @@ class NewController extends Controller
         $new->text=$request->get('text');
         $new->user()->associate(Auth::user());
         $new->save();
-        return redirect()->route('home::');
+        return redirect()->route('account::');
     }
 
     /**
@@ -93,7 +93,7 @@ class NewController extends Controller
         $new->title=$request->get('title');
         $new->text=$request->get('text');
         $new->save();
-        return redirect()->route('home::');
+        return redirect()->route('account::');
     }
 
     /**

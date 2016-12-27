@@ -40,9 +40,9 @@ class AccountController extends Controller
 
         $offset=($page*$paginate)-$paginate;
         $itemsForCurrentPage = array_slice($data->toArray(), $offset, $paginate, true);
-        $data=new LengthAwarePaginator($itemsForCurrentPage, count($data), $paginate, $page, ['path'=>'/home']);
+        $data=new LengthAwarePaginator($itemsForCurrentPage, count($data), $paginate, $page, ['path'=>'/account']);
 
-        return view('home', [
+        return view('account', [
           'data'=>$data
         ]);
     }

@@ -60,7 +60,7 @@
 
                                 <ul class="dropdown-menu" role="menu">
                                     <li>
-                                        <a href="{{url('/home')}}">
+                                        <a href="{{url('/account')}}">
                                             Home
                                         </a>
                                     </li>

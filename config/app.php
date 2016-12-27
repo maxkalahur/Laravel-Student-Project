@@ -167,6 +167,7 @@ return [
         /*
          * Package Service Providers...
          */
+        Cviebrock\EloquentSluggable\ServiceProvider::class,
 
         //
 
