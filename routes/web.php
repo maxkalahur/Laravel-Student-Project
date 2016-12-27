@@ -14,20 +14,21 @@
 Route::get('/', 'HomeController@index');
 Auth::routes();
 
-Route::group(['prefix'=>'account', 'as'=>'account::'], function () {
+Route::group(['prefix'=>'account', 'as'=>'account::', 'middleware'=>'auth'], function () {
    Route::get('/', 'AccountController@index');
    Route::resource('articles', 'ArticleController');
    Route::resource('news', 'NewsController');
 });
-Route::group(['prefix'=>'article', 'as'=>'article::'], function () {
+Route::group(['prefix'=>'article', 'as'=>'article::', 'middleware'=>'auth'], function () {
     Route::get('/{slug}', 'ShowRecordsController@showArticle')->name('view');
     Route::post('/{id}', 'CommentController@articleComment')->name('Comment');
 
 });
-Route::group(['prefix'=>'news', 'as'=>'news::'], function () {
+Route::group(['prefix'=>'news', 'as'=>'news::', 'middleware'=>'auth'], function () {
     Route::get('/{slug}', 'ShowRecordsController@showNews')->name('view');
     Route::post('/{id}', 'CommentController@newsComment')->name('Comment');
 });
+Route::get('/file/{name}', 'CommentController@downloadFiles')->name('download');
 
 
 

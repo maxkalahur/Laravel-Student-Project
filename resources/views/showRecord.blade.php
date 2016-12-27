@@ -15,14 +15,14 @@
             <div class="col-md-8 col-md-offset-2">
                 @foreach($comments as $comment)
                    <div class="col-md-4 col-md-offset-2">
-                    {{ $comment->name}}
+                    {{ $comment->author->name}}
                    </div>
                     <div class="col-md-4 col-md-offset-2">
                         {{ $comment->created_at}}
                     </div>
                     <div class="col-md-8 col-md-offset-2">
                        <p align="left"> {{$comment->text}} </p>
-                       <a href="file/{{$comment->file}}" >{{$comment->file}}</a>
+                       <a href="{{route('download', $comment->file)}}" >{{$comment->file}}</a>
                     </div>
                 @endforeach
                 <form action="{{route("$data->actionComments", $data[0]->id)}}" method="post" enctype="multipart/form-data">

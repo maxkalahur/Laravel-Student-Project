@@ -37,8 +37,6 @@ class ShowRecordsController extends Controller
             ['parent', $parent],
             ['post_id', $id]
         ])->orderBy('updated_at', 'desc')->get();
-        foreach($comments as $comment)
-             $comment->name=$comment->author->name;
         return $comments;
     }
 }
