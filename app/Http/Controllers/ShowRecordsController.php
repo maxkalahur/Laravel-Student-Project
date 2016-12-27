@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Comment;
 use Illuminate\Http\Request;
-use App\Articles;
+use App\Article;
 use App\News;
 
 class ShowRecordsController extends Controller
@@ -21,7 +21,7 @@ class ShowRecordsController extends Controller
     }
     public function showArticle($id)
     {
-        $record=Articles::find($id);
+        $record=Article::find($id);
         $record->action='comment';
         $comments=Comment::find($id);
         return view('showRecord', [

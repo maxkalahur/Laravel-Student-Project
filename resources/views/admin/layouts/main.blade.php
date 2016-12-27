@@ -35,11 +35,12 @@
                 </button>
 
                 <!-- Branding Image -->
-                <a class="navbar-brand" href="{{ url('/admin') }}">
-                    Dashboard
+                <a class="navbar-brand" href="{{ route('admin::home') }}">
+                    @lang('admin.dashboard')
                 </a>
             </div>
-
+                <a href="/ua/admin">UA</a>
+                <a href="/admin">EN</a>
             <div class="collapse navbar-collapse" id="app-navbar-collapse">
                 <!-- Left Side Of Navbar -->
                 <ul class="nav navbar-nav">

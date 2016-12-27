@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Articles extends Model
+class Article extends Model
 {
     /**
      * @return array
@@ -13,4 +13,5 @@ class Articles extends Model
     {
         return $this->belongsTo('App\User');
     }
+
 }

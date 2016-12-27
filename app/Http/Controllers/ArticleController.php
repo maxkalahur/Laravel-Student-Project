@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Articles;
+use App\Article;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -41,7 +41,7 @@ class ArticleController extends Controller
             'title' => 'required|max:255',
             'text'=>'required'
         ));
-        $article = new Articles;
+        $article = new Article;
         $article->title=$request->get('title');
         $article->text = $request->get('text');
         $article->user()->associate(Auth::user());
@@ -66,7 +66,7 @@ class ArticleController extends Controller
      */
     public function edit($id)
     {
-        $article=Articles::findOrFail($id);
+        $article=Article::findOrFail($id);
         return view('crudArticle', [
             'header'=>'Update article',
             'article'=>$article
@@ -82,7 +82,7 @@ class ArticleController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $article=Articles::findOrFail($id);
+        $article=Article::findOrFail($id);
         $this->validate($request, array(
             'title' => 'required|max:255',
             'text'=>'required'
@@ -101,7 +101,7 @@ class ArticleController extends Controller
      */
     public function destroy($id)
     {
-        $article=Articles::findOrFail($id);
+        $article=Article::findOrFail($id);
         $article->delete();
         return redirect()->back();
     }
