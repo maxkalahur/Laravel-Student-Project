@@ -13,16 +13,15 @@ class HomeController extends Controller
         $page=Input::get('page', 1);
         $paginate=4;
          $members=DB::table('news')
-             ->select(DB::raw('id,title, text, created_at, updated_at, \'news\' as table_name'));
+             ->select(DB::raw('id,title, text, created_at, updated_at, slug, \'news\' as table_name'));
         $data=DB::table('articles')
-            ->select(DB::raw('id,title, text, created_at, updated_at,\'articles\' as table_name'))
+            ->select(DB::raw('id,title, text, created_at, updated_at, slug,\'articles\' as table_name'))
             ->unionAll($members)
             ->get();
-        dump($data);
         $offset=($page*$paginate)-$paginate;
         $itemsForCurrentPage = array_slice($data->toArray(), $offset, $paginate, true);
         $data=new LengthAwarePaginator($itemsForCurrentPage, count($data), $paginate, $page, ['path'=>'/']);
-        return view('welcome', [
+        return view('home', [
             'data'=>$data
         ]);
     }

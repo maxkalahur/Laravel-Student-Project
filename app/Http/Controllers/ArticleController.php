@@ -41,12 +41,12 @@ class ArticleController extends Controller
             'title' => 'required|max:255',
             'text'=>'required'
         ));
-        $article = new Article;
+        $article = new Article();
         $article->title=$request->get('title');
         $article->text = $request->get('text');
         $article->user()->associate(Auth::user());
         $article->save();
-        return redirect()->route('home::');
+        return redirect()->route('account::');
     }
 
     /**
@@ -90,7 +90,7 @@ class ArticleController extends Controller
         $article->title=$request->get('title');
         $article->text=$request->get('text');
         $article->save();
-        return redirect()->route('home::');
+        return redirect()->route('account::');
     }
 
     /**

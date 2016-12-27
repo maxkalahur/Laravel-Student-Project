@@ -21,7 +21,8 @@ class ArticleSeeder extends Seeder
                 'text' => implode($faker->paragraphs(5)),
                 'user_id' => $faker->numberBetween(0, 100),
                 'updated_at' => \Carbon\Carbon::now(),
-                'created_at' => \Carbon\Carbon::now()
+                'created_at' => \Carbon\Carbon::now(),
+                'slug'=>$faker->sentence()
             ]);
         }
     }
