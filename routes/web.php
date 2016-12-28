@@ -1,4 +1,4 @@
-    <?php
+<?php
 
 /*
 |--------------------------------------------------------------------------
@@ -15,18 +15,18 @@ Route::get('/', 'HomeController@index');
 Auth::routes();
 
 Route::group(['prefix'=>'account', 'as'=>'account::', 'middleware'=>'auth'], function () {
-   Route::get('/', 'AccountController@index');
-   Route::resource('articles', 'ArticleController');
-   Route::resource('news', 'NewsController');
+    Route::get('/', 'AccountController@index');
+    Route::resource('articles', 'ArticleController');
+    Route::resource('news', 'NewsController');
 });
-Route::group(['prefix'=>'article', 'as'=>'article::', 'middleware'=>'auth'], function () {
+Route::group(['prefix'=>'article', 'as'=>'article::'], function () {
     Route::get('/{slug}', 'ShowRecordsController@showArticle')->name('view');
-    Route::post('/{id}', 'CommentController@articleComment')->name('Comment');
+    Route::post('/{id}', 'CommentController@articleComment')->name('Comment')->middleware('auth');
 
 });
-Route::group(['prefix'=>'news', 'as'=>'news::', 'middleware'=>'auth'], function () {
+Route::group(['prefix'=>'news', 'as'=>'news::'], function () {
     Route::get('/{slug}', 'ShowRecordsController@showNews')->name('view');
-    Route::post('/{id}', 'CommentController@newsComment')->name('Comment');
+    Route::post('/{id}', 'CommentController@newsComment')->name('Comment')->middleware('auth');
 });
 Route::get('/file/{name}', 'CommentController@downloadFiles')->name('download');
 
@@ -49,6 +49,4 @@ Route::group(['prefix' =>'admin','as' => 'admin::', 'middleware' => ['checkAdmin
     Route::resource('comment', 'Admin\CommentController', [
         'only' => ['index', 'create', 'store', 'edit', 'update', 'destroy']
     ]);
-
-
 });
